@@ -6,7 +6,7 @@ pipeline {
         stage('Checkout') {
             
             steps {
-                // Get some code from a GitHub repository
+                
                 git branch: 'main',
                     url: 'https://gitlab.com/Aman42988/pipelines-java-1.git'
 
@@ -25,20 +25,22 @@ pipeline {
 
         }
 
-        stage ('Deploy') {
+         stage ('Deploy') {
+    
 
-            steps {
-                echo "deploy stage"
-                deploy adapters: [tomcat9 (
-                        credentialsId: 'tomcat_deployer',
-                        path: '',
-                        url: 'http://http://172.210.137.243:8088/'
-                    )],
-                    contextPath: 'test',
-                    onFailure: 'false',
-                    war: '**/*.war'
-            }
-        }
+       steps {
+           echo "deploy stage"
+           deploy adapters: [tomcat9 (
+                   credentialsId: 'tomcat_deployer',
+                   path: '',
+                   url: 'http://172.210.137.243:8081/'
+               )],
+               contextPath: 'test',
+               onFailure: 'false',
+               war: '**/*.war'
+       }
+   }
+
 
     }
 }
