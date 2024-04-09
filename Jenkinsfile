@@ -1,46 +1,41 @@
 pipeline {
     agent any
-
     stages {
-         
-        stage('Checkout') {
-            
+        stage('Build') {
             steps {
-                
-                git branch: 'main',
-                    url: 'https://gitlab.com/Aman42988/pipelines-java-1.git'
-
-             }
-        }
-
-        stage ('Build') {
-
-            steps {
-                // Run Maven on a Unix agent.
-                sh "mvn -Dmaven.test.failure.ignore=true clean package"
-
-                // To run Maven on a Windows agent, use
-                // bat "mvn -Dmaven.test.failure.ignore=true clean package"
+                sh 'mvn clean package'
             }
-
         }
-
-         stage ('Deploy') {
-    
-
-       steps {
-           echo "deploy stage"
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+        stage('Install') {
+            when {
+                branch 'Development'
+            }
+            steps {
+                sh 'mvn install'
+            }
+        }
+        stage('Deploy') {
+            when {
+                branch 'Main'
+            }
+            steps {
+                // Add deployment steps here (e.g., deploy war file to a server)
+                echo "deploy stage"
            deploy adapters: [tomcat9 (
                    credentialsId: 'tomcat_deployer',
                    path: '',
                    url: 'http://172.210.137.243:8088/'
                )],
-               contextPath: 'test',
+               contextPath: 'Demo',
                onFailure: 'false',
                war: '**/*.war'
-       }
-   }
 
-
+            }
+        }
     }
 }
