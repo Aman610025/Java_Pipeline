@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Install') {
             when {
-                branch 'Development'
+                branch 'develop'
             }
             steps {
                 sh 'mvn install'
@@ -21,7 +21,7 @@ pipeline {
         }
         stage('Deploy') {
             when {
-                branch 'Main'
+                branch 'main'
             }
             steps {
                 // Add deployment steps here (e.g., deploy war file to a server)
