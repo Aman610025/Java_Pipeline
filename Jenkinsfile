@@ -33,7 +33,7 @@ pipeline {
            deploy adapters: [tomcat9 (
                    credentialsId: 'tomcat_deployer',
                    path: '',
-                   url: 'http://172.210.137.243:8081/'
+                   url: 'http://172.210.137.243:8088/'
                )],
                contextPath: 'test',
                onFailure: 'false',
