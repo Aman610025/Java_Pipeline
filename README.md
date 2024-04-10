@@ -3,11 +3,6 @@ SCM Polling Test
 
 
 
-
-
-hiiii i love u
-
-
 # Contributing
  
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
